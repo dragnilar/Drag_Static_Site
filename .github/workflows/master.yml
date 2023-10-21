@@ -19,9 +19,10 @@ jobs:
       # Publish to release
     - name: Publish .NET Core Project
       run: dotnet publish -c Release -o release --nologo
-    - name: Commit wwwroot to GitHub Pages
+      # Push to GH-Pages branch
+    - name: Commit wwwroot to Release Branch
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
-        BRANCH: gh-pages
+        BRANCH: Release
         FOLDER: release/wwwroot
     
