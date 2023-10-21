@@ -1,0 +1,28 @@
+name: Publish To Github
+
+# Run on every push to master
+on:
+  push:
+    branches: [ master ]
+jobs:
+  deploy-to-github-pages:
+    # use ubuntu-latest for the VM
+    runs-on: ubuntu-latest
+    steps:
+    # use the checkout action to checkout from Master
+    - uses: actions/checkout@v2
+      # sets up .NET Core SDK 7.0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.x'
+      # Publish to release
+    - name: Publish .NET Core Project
+      run: dotnet publish -c Release -o release --nologo
+    - name: Commit wwwroot to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: release/wwwroot
+    
