@@ -8,7 +8,7 @@
   "resources": {
     "assembly": {
       "Blazored.LocalStorage.dll": "sha256-5V8ovY1srbIIz7lzzMhLd3nNJ9LJ6bHoBOnLJahv8Go=",
-      "Drag_Static_Site.dll": "sha256-Ki8xY5rCVyjo5WCY5FDoBuGeeZYLeY290ACl00I6lX0=",
+      "Drag_Static_Site.dll": "sha256-whZ8aKDGAYx84DSkstx6FtPtSb2+ikWfeAnynQ9TPyA=",
       "Markdig.dll": "sha256-\/OHBGJDFwFENvDYSXQ4QGozJaA3js46HvXZ5IWM9qpg=",
       "Microsoft.AspNetCore.Components.dll": "sha256-+LBIqXqGeAEuewyiDUV4K1WRQZhH5pORukdbxZ2u7WM=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-2WUk6hGW+OsinXf\/D4GZSxFQCsbhpXaNZ2K6mvL1naU=",
@@ -26,7 +26,7 @@
       "Microsoft.Extensions.Primitives.dll": "sha256-eXvGx2jcjpTPEJoAHBsW\/VuMPbNyyU+AsuhPmkzSSRY=",
       "Microsoft.JSInterop.dll": "sha256-aCjefSKcuhF374z+6E8xEoTi8LmTJXXPq9AqJmH3Zks=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-hrrqtgOYJLG2GCHTtuYdpVxhECNov3eN6Sy\/Di9cooQ=",
-      "MudBlazor.dll": "sha256-\/mSp+lCS0AmWRpkw5bKAMgfOwiqvz0e7Ate3RSNS93w=",
+      "MudBlazor.dll": "sha256-GBXJLR4DAmVmdoXO1YbJewB6S+aU2GyBM4Qm10cVGdk=",
       "MudBlazor.Markdown.dll": "sha256-pO9sV8KPzqLLsH5VzBio\/eLD2jVF8TSWNlynTGNEtHE=",
       "System.Collections.Concurrent.dll": "sha256-KvPvC0NpxiSq+PnfI6M4bCw2ps9y4VjX6pABin0WAu8=",
       "System.Collections.dll": "sha256-hlSj7Tr1Vj6dOIwBZqCBB\/Dz2SisPbR39iotM\/upvnA=",
