@@ -7,7 +7,9 @@
 <MudLayout>
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        A Static Blog Made In Blazor
+        <span>A Static Blog Made In Blazor</span>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Href="https://github.com/dragnilar" Target="_blank" Title="Visit my Github Profile" ></MudIconButton>
     </MudAppBar>
     <MudDrawer @bind-Open="@DrawerOpen">
         <NavMenu />

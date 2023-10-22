@@ -17,13 +17,6 @@
   <ItemGroup>
     <Folder Include="PreBuildUtils\" />
     <Folder Include="wwwroot\fonts\" />
-    <Folder Include="wwwroot\Posts\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="wwwroot\posts.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

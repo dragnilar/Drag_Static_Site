@@ -13,10 +13,4 @@ public class PostFrontMatter
     public DateTime PublishedDateTime { get; set; }
     [YamlMember(Alias = "fileName")]
     public string FileName { get; set; }
-    
-    [YamlIgnore]
-    public IList<string> GetTags => Tags?
-        .Split(",", StringSplitOptions.RemoveEmptyEntries)
-        .Select(x => x.Trim())
-        .ToArray();
 }

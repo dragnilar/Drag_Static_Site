@@ -1,0 +1,22 @@
+﻿@page "/About"
+@using Drag_Static_Site.Services
+@inject HttpClient HttpClient
+@inject PostService PostService
+<MudMarkdown Value="@AboutMarkDown"></MudMarkdown>
+
+@code {
+    
+    string AboutMarkDown { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await PostService.InitializeAsync(HttpClient);
+        var aboutPost = PostService.Posts.FirstOrDefault(x => x.PostName == "About This Site");
+        if (aboutPost == null)
+        {
+            throw new Exception("The about post / 10222023.md was not found");
+        }
+        AboutMarkDown = await PostService.GetPostHtmlAsync(aboutPost, HttpClient);
+    }
+
+}
