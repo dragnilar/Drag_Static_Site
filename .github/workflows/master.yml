@@ -19,10 +19,16 @@ jobs:
       # Publish to release
     - name: Publish .NET Core Project
       run: dotnet publish -c Release -o release --nologo
-    - name: Commit wwwroot to GitHub Pages
+      # changes the base-tag in index.html from '/' to 'Drag_Static_Site' to match the GitHub Pages repository folder struc
+    - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
+      run: sed -i 's/<base href="\/" \/>/<base href="\/Drag_Static_Site\/" \/>/g' release/wwwroot/index.html
+      # add .nojekyll file since this isn't made with Jekyll. This is needed because Blazor uses files & folders with initial char of _'s 
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+      # Push to GH-Pages branch
+    - name: Commit wwwroot to Release Branch
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
+        BRANCH: Release
         FOLDER: release/wwwroot
     
