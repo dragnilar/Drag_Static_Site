@@ -1,17 +1,42 @@
-﻿@inherits LayoutComponentBase
-
-<div class="page">
-    <div class="sidebar">
+﻿@using Drag_Static_Site.Constants
+@inherits LayoutComponentBase
+@inject ILocalStorageService LocalStorage
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        A Static Blog Made In Blazor
+    </MudAppBar>
+    <MudDrawer @bind-Open="@DrawerOpen">
         <NavMenu />
-    </div>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+@code {
+    bool DrawerOpen { get; set; }
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ShowOrHideNavDrawerOnLoad();
+        }
+        await base.OnAfterRenderAsync(firstRender).ConfigureAwait(false);
+    }
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    private async Task ShowOrHideNavDrawerOnLoad()
+    {
+        DrawerOpen = await LocalStorage.GetItemAsync<bool>(CacheKeys.MainLayout_ShowDrawer);
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+    }
+
+    async Task DrawerToggle()
+    {
+        DrawerOpen = !DrawerOpen;
+        await LocalStorage.SetItemAsync(CacheKeys.MainLayout_ShowDrawer, DrawerOpen).ConfigureAwait(false);
+    }
+}

@@ -1,9 +1,65 @@
 ﻿@page "/"
+@using System.Net
+@using Drag_Static_Site.Constants
+@using Drag_Static_Site.Models
+@inject HttpClient HttpClient
+@inject PostCollection PostCollection
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudText Typo="Typo.h3">You're Currently Reading:@CurrentPost.PostName</MudText>
+<MudText Typo="Typo.h4">Published / Last Updated: @CurrentPost.PublishedDateTime</MudText>
+<MudMarkdown Value="@CurrentMarkDown"></MudMarkdown>
+<MudButton OnClick="GoPrevious">Previous Post</MudButton>
+<MudButton OnClick="GoNext">Next Post</MudButton>
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?👁️" />
+@code
+{
+    string CurrentMarkDown;
+    int CurrentPostIndex;
+    Post CurrentPost { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentPost = PostCollection.Posts.First();
+        CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+        CurrentPostIndex = 0;
+        await base.OnInitializedAsync().ConfigureAwait(false);
+
+    }
+
+    private async Task GoPrevious()
+    {
+        var lastIndex = PostCollection.Posts.IndexOf(PostCollection.Posts.Last());
+        if (CurrentPostIndex > 0 && CurrentPostIndex <= lastIndex )
+        {
+            CurrentPost = PostCollection.Posts[CurrentPostIndex - 1];
+            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPostIndex--;
+        }
+        else if (CurrentPostIndex == 0)
+        {
+            CurrentPost = PostCollection.Posts[lastIndex];
+            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPostIndex = lastIndex;
+        }
+    }
+
+    private async Task GoNext()
+    {
+        var lastIndex = PostCollection.Posts.IndexOf(PostCollection.Posts.Last());
+        if (CurrentPostIndex < lastIndex)
+        {
+            CurrentPost = PostCollection.Posts[CurrentPostIndex + 1];
+            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPostIndex++;
+        }
+        else if (CurrentPostIndex == lastIndex)
+        {
+            CurrentPost = PostCollection.Posts[0];
+            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPostIndex = 0;
+        }
+
+    }
+}
