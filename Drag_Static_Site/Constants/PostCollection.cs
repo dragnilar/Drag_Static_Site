@@ -4,7 +4,8 @@ namespace Drag_Static_Site.Constants;
 
 public class PostCollection
 {
-    public List<Post> Posts;
+    public List<Post>    Posts;
+    public List<string>? PostsFromJson { get; set; }
 
     public PostCollection()
     {

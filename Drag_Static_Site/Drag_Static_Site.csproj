@@ -19,4 +19,14 @@
     <Folder Include="wwwroot\Posts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\posts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="call $(ProjectDir)PostMetaDataGenerator.exe" />
+  </Target>
+
 </Project>

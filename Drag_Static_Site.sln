@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drag_Static_Site", "Drag_Static_Site\Drag_Static_Site.csproj", "{A31A88EC-25A5-490B-8DF1-5ABC92AE6943}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Drag_Static_Site", "Drag_Static_Site\Drag_Static_Site.csproj", "{A31A88EC-25A5-490B-8DF1-5ABC92AE6943}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostMetaDataGenerator", "PostMetaDataGenerator\PostMetaDataGenerator.csproj", "{A7FAFF54-9537-4282-9761-A6EA05B79F44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A31A88EC-25A5-490B-8DF1-5ABC92AE6943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A31A88EC-25A5-490B-8DF1-5ABC92AE6943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A31A88EC-25A5-490B-8DF1-5ABC92AE6943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7FAFF54-9537-4282-9761-A6EA05B79F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7FAFF54-9537-4282-9761-A6EA05B79F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7FAFF54-9537-4282-9761-A6EA05B79F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7FAFF54-9537-4282-9761-A6EA05B79F44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

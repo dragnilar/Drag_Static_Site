@@ -22,6 +22,7 @@
     protected async override Task OnInitializedAsync()
     {
         CurrentPost = PostCollection.Posts.First();
+        PostCollection.PostsFromJson = await HttpClient.GetFromJsonAsync<List<string>>("posts.json");
         CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
         CurrentPostIndex = 0;
         await base.OnInitializedAsync().ConfigureAwait(false);
