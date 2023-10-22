@@ -1,17 +1,22 @@
 ﻿@page "/"
-@using System.Net
-@using Drag_Static_Site.Constants
 @using Drag_Static_Site.Models
+@using Drag_Static_Site.Services
+@using Markdig
 @inject HttpClient HttpClient
-@inject PostCollection PostCollection
+@inject PostService PostService
 
-
-<MudText Typo="Typo.h3">You're Currently Reading:@CurrentPost.PostName</MudText>
-<MudText Typo="Typo.h4">Published / Last Updated: @CurrentPost.PublishedDateTime</MudText>
-<MudMarkdown Value="@CurrentMarkDown"></MudMarkdown>
-<MudButton OnClick="GoPrevious">Previous Post</MudButton>
-<MudButton OnClick="GoNext">Next Post</MudButton>
-
+@if (CurrentPost == null)
+{
+    <h3><MudProgressCircular Color="Color.Success" Size="Size.Large" /> Loading Post...</h3>
+}
+else
+{
+    <MudText Typo="Typo.h3">You're Currently Reading:@CurrentPost.PostName</MudText>
+    <MudText Typo="Typo.h4">Published / Last Updated: @CurrentPost.PublishedDateTime</MudText>
+    <MudMarkdown Value="@CurrentMarkDown"></MudMarkdown>
+    <MudButton OnClick="GoPrevious">Previous Post</MudButton>
+    <MudButton OnClick="GoNext">Next Post</MudButton>
+}
 
 @code
 {
@@ -19,11 +24,12 @@
     int CurrentPostIndex;
     Post CurrentPost { get; set; }
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        CurrentPost = PostCollection.Posts.First();
-        PostCollection.PostsFromJson = await HttpClient.GetFromJsonAsync<List<string>>("posts.json");
-        CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+        await PostService.InitializeAsync(HttpClient);
+        CurrentPost = PostService.Posts.First();
+        var markdown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient);
+        CurrentMarkDown = markdown;
         CurrentPostIndex = 0;
         await base.OnInitializedAsync().ConfigureAwait(false);
 
@@ -31,34 +37,34 @@
 
     private async Task GoPrevious()
     {
-        var lastIndex = PostCollection.Posts.IndexOf(PostCollection.Posts.Last());
+        var lastIndex = PostService.Posts.IndexOf(PostService.Posts.Last());
         if (CurrentPostIndex > 0 && CurrentPostIndex <= lastIndex )
         {
-            CurrentPost = PostCollection.Posts[CurrentPostIndex - 1];
-            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPost = PostService.Posts[CurrentPostIndex - 1];
+            CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;
             CurrentPostIndex--;
         }
         else if (CurrentPostIndex == 0)
         {
-            CurrentPost = PostCollection.Posts[lastIndex];
-            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPost = PostService.Posts[lastIndex];
+            CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;
             CurrentPostIndex = lastIndex;
         }
     }
 
     private async Task GoNext()
     {
-        var lastIndex = PostCollection.Posts.IndexOf(PostCollection.Posts.Last());
+        var lastIndex = PostService.Posts.IndexOf(PostService.Posts.Last());
         if (CurrentPostIndex < lastIndex)
         {
-            CurrentPost = PostCollection.Posts[CurrentPostIndex + 1];
-            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPost = PostService.Posts[CurrentPostIndex + 1];
+            CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;
             CurrentPostIndex++;
         }
         else if (CurrentPostIndex == lastIndex)
         {
-            CurrentPost = PostCollection.Posts[0];
-            CurrentMarkDown = await CurrentPost.GetMarkDownContentAsync(HttpClient);
+            CurrentPost = PostService.Posts[0];
+            CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;
             CurrentPostIndex = 0;
         }
 
