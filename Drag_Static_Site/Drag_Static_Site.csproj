@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="call $(ProjectDir)\PreBuildUtils\PostMetaDataGenerator.exe" />
+    <Exec Command="dotnet $(ProjectDir)\PreBuildUtils\PostMetaDataGenerator.dll" />
   </Target>
 
 </Project>
