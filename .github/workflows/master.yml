@@ -18,7 +18,7 @@ jobs:
         dotnet-version: '7.x'
       # Publish to release
     - name: Publish .NET Core Project - Output to Console
-      run: echo "$(dotnet publish ./Drag_Static_Site/Drag_Static_Site -c Release -o release --nologo --verbosity n)"
+      run: echo "$(dotnet publish .\/Drag_Static_Site\/Drag_Static_Site -c Release -o release --nologo --verbosity n)"
       # changes the base-tag in index.html from '/' to 'Drag_Static_Site' to match the GitHub Pages repository folder struc
     - name: Change base-tag in index.html from / to Drag_Static_Site
       run: sed -i 's/<base href="\/" \/>/<base href="\/Drag_Static_Site\/" \/>/g' release/wwwroot/index.html
