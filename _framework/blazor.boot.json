@@ -8,7 +8,7 @@
   "resources": {
     "assembly": {
       "Blazored.LocalStorage.dll": "sha256-5V8ovY1srbIIz7lzzMhLd3nNJ9LJ6bHoBOnLJahv8Go=",
-      "Drag_Static_Site.dll": "sha256-G4npvfakIh9keVm\/qyH8J7qj5vDbyHKrNjzkNfW07mU=",
+      "Drag_Static_Site.dll": "sha256-KRAvB5vCTRqcjf+Bw73QxkiHKNqEGp07RcDYS4VBrno=",
       "Markdig.dll": "sha256-\/OHBGJDFwFENvDYSXQ4QGozJaA3js46HvXZ5IWM9qpg=",
       "Microsoft.AspNetCore.Components.dll": "sha256-+LBIqXqGeAEuewyiDUV4K1WRQZhH5pORukdbxZ2u7WM=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-2WUk6hGW+OsinXf\/D4GZSxFQCsbhpXaNZ2K6mvL1naU=",
