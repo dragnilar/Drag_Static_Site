@@ -11,17 +11,32 @@
 }
 else
 {
-    <MudText Typo="Typo.h3">You're Currently Reading:@CurrentPost.PostName</MudText>
-    <MudText Typo="Typo.h4">Published / Last Updated: @CurrentPost.PublishedDateTime</MudText>
-    <MudMarkdown Value="@CurrentMarkDown"></MudMarkdown>
-    <MudButton OnClick="GoPrevious">Previous Post</MudButton>
-    <MudButton OnClick="GoNext">Next Post</MudButton>
+    <MudGrid>
+        <MudItem xs="1" />
+        <MudItem xs="10">
+            <br/>
+            <MudPaper Elevation="6">
+                <MudText Typo="Typo.h3" Align="Align.Left">You're Currently Reading: @CurrentPost.PostName</MudText>
+                <br/>
+                <MudText Typo="Typo.h5" Align="Align.Right">Published / Last Updated: @CurrentPost.PublishedDateTime</MudText>
+            </MudPaper>
+            <br/>
+            <MudMarkdown Value="@CurrentMarkDown"></MudMarkdown>
+            <MudPaper Elevation="3">
+                <MudFab OnClick="GoPrevious" StartIcon="@Icons.Material.Filled.ArrowLeft" Label="Previous Post" Color="Color.Primary"/>
+                <MudFab OnClick="GoNext" EndIcon="@Icons.Material.Filled.ArrowRight" Label="Next post" Color="Color.Success" />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="1"></MudItem>
+    </MudGrid>
+
 }
 
 @code
 {
     string CurrentMarkDown;
     int CurrentPostIndex;
+    int LastPostIndex;
     Post CurrentPost { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -31,6 +46,7 @@ else
         var markdown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient);
         CurrentMarkDown = markdown;
         CurrentPostIndex = 0;
+        LastPostIndex = PostService.Posts.IndexOf(PostService.Posts.Last());
         await base.OnInitializedAsync().ConfigureAwait(false);
 
     }

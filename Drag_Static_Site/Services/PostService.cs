@@ -12,6 +12,7 @@ public class PostService
     {
 
         Posts = await client.GetFromJsonAsync<List<Post>>("posts.json");
+        Posts = Posts.OrderByDescending(x => x.PublishedDateTime).ToList();
         MdPipeLine = new MarkdownPipelineBuilder().UseYamlFrontMatter().Build();
     }
 

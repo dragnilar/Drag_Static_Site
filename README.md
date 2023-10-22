@@ -1,5 +1,5 @@
 # Drag_Static_Site
-This is a static website I made to host a blog (anything else I feel like making).
+This is a static website I made to host a blog and anything else I feel like making.
 
 The site is a Blazor Web Assembly app using:
 
