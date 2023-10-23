@@ -7,9 +7,14 @@ var postDirectory = Path.Combine(Environment.CurrentDirectory, "wwwroot", "Posts
 var postFiles     = Directory.GetFiles(postDirectory).ToList();
 if (postFiles.Any())
 {
-    var frontmatters = postFiles.Select(File.ReadAllText)
-        .Select(markDownFile => markDownFile.GetFrontMatter<PostFrontMatter>()).ToList();
-    var json      = JsonSerializer.Serialize<List<PostFrontMatter>>(frontmatters);
+    List<PostFrontMatter> frontMatters = new List<PostFrontMatter>();
+    foreach (var postFile in postFiles)
+    {
+        var newFrontMatter = File.ReadAllText(postFile).GetFrontMatter<PostFrontMatter>();
+        newFrontMatter.FileName = $"Posts/{Path.GetFileName(postFile)}";
+        frontMatters.Add(newFrontMatter);
+    }
+    var json      = JsonSerializer.Serialize<List<PostFrontMatter>>(frontMatters);
     File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "wwwroot", "posts.json"), json );
     Console.WriteLine($"{Environment.NewLine}Post Meta Data Generator -Finished Generating Blog Metadata...");
 }

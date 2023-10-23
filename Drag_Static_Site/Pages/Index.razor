@@ -7,6 +7,8 @@
 
 @if (CurrentPost == null)
 {
+    <MudSkeleton SkeletonType="SkeletonType.Circle" Width="75px" Height="75px" />
+    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="400px" Height="200px"></MudSkeleton>
     <h3><MudProgressCircular Color="Color.Success" Size="Size.Large" /> Loading Post...</h3>
 }
 else
@@ -38,7 +40,7 @@ else
 {
     string CurrentMarkDown;
     int CurrentPostIndex;
-    int LastPostIndex;
+    int LastPostIndex => PostService.LastPostIndex;
     Post CurrentPost { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -48,15 +50,13 @@ else
         var markdown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient);
         CurrentMarkDown = markdown;
         CurrentPostIndex = 0;
-        LastPostIndex = PostService.Posts.IndexOf(PostService.Posts.Last());
         await base.OnInitializedAsync().ConfigureAwait(false);
 
     }
 
     private async Task GoPrevious()
     {
-        var lastIndex = PostService.Posts.IndexOf(PostService.Posts.Last());
-        if (CurrentPostIndex > 0 && CurrentPostIndex <= lastIndex )
+        if (CurrentPostIndex > 0 && CurrentPostIndex <= LastPostIndex )
         {
             CurrentPost = PostService.Posts[CurrentPostIndex - 1];
             CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;
@@ -64,22 +64,21 @@ else
         }
         else if (CurrentPostIndex == 0)
         {
-            CurrentPost = PostService.Posts[lastIndex];
+            CurrentPost = PostService.Posts[LastPostIndex];
             CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;
-            CurrentPostIndex = lastIndex;
+            CurrentPostIndex = LastPostIndex;
         }
     }
 
     private async Task GoNext()
     {
-        var lastIndex = PostService.Posts.IndexOf(PostService.Posts.Last());
-        if (CurrentPostIndex < lastIndex)
+        if (CurrentPostIndex < LastPostIndex)
         {
             CurrentPost = PostService.Posts[CurrentPostIndex + 1];
             CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;
             CurrentPostIndex++;
         }
-        else if (CurrentPostIndex == lastIndex)
+        else if (CurrentPostIndex == LastPostIndex)
         {
             CurrentPost = PostService.Posts[0];
             CurrentMarkDown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient); ;

@@ -11,10 +11,10 @@
     protected override async Task OnInitializedAsync()
     {
         await PostService.InitializeAsync(HttpClient);
-        var aboutPost = PostService.Posts.FirstOrDefault(x => x.PostName == "About This Site");
+        var aboutPost = PostService.Posts.FirstOrDefault(x => x.PostName == "About This Site" && x.Tags.Contains("about"));
         if (aboutPost == null)
         {
-            throw new Exception("The about post / 10222023.md was not found");
+            throw new Exception("The about post / AboutSite markdown was not found");
         }
         AboutMarkDown = await PostService.GetPostHtmlAsync(aboutPost, HttpClient);
     }
