@@ -7,7 +7,7 @@ published: 10/22/2023 17:24:00
 ### It Lives Up to Its Claim, BTW
 <a href="Posts/Images/MudBlazorSS.png"><img src="Posts/Images/MudBlazorSS.png" height="350" width="700" target="_blank" title="Screen Shot of Mud Blazor's Website"></a>
 
-[MudBlazor 🔗](https://www.mudblazor.com/) is probably one of the most impressive components libraries I have ever seen. It is a worth rival to the the likes of my personal favorite, [DevExpress 🔗](https://demos.devexpress.com/blazor/), [Telerik](https://demos.telerik.com/blazor-ui) 🔗 and a couple others. So in other words (and in case you were wondering), it is NOT a "Poor Man's Component Library". 
+[MudBlazor 🔗](https://www.mudblazor.com/) is probably one of the most impressive components libraries I have ever seen. I'll admit Mud is a worthy rival to the larger offerings by [DevExpress 🔗](https://demos.devexpress.com/blazor/), [Telerik](https://demos.telerik.com/blazor-ui) 🔗 and a couple others. 
 
 One of the things that they have that shocked me, was a very functional DataGrid. They also have Cell Editing, which is something DevExpress still doesn't have in their Blazor Data Grid.
 
