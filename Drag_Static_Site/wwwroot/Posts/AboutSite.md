@@ -3,12 +3,12 @@ tags: about, site
 title: About This Site
 published: 10/22/2023 12:00:00
 ---
-# This is Dragnilar's Github Site
+# What you may find on this site:
 
 This site is my own personal site and it may contain any of the following:
 
 - My personal opinions, about many things
-- Experimental pages / "scratches" that are subject to change, ~~_that which have very limited use_~~ 😏
+- Pages that may not necessarily be "blog pages" 
 - Emojis 🎉
 - Nonsense and/or eccentric interests 
 
