@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="dotnet build $(SolutionDir/PostMetaDataGenerator/PostMetaDataGenerator.csproj -o $(ProjectDir)/PreBuildUtils/&#xA;&#xA;dotnet $(ProjectDir)/PreBuildUtils/PostMetaDataGenerator.dll" />
+    <Exec Command="dotnet build $(SolutionDir)/PostMetaDataGenerator/PostMetaDataGenerator.csproj -o $(ProjectDir)/PreBuildUtils/&#xA;&#xA;dotnet $(ProjectDir)/PreBuildUtils/PostMetaDataGenerator.dll" />
   </Target>
 
 </Project>
