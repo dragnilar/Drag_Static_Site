@@ -1,0 +1,49 @@
+﻿@page "/grid"
+@using Drag_Static_Site.Models
+<MudText Typo="Typo.h2">Look, A Data Grid!</MudText>
+<MudText Typo="Typo.h5">No .NET Site would be complete without a data grid...</MudText>
+<br/>
+<MudGrid>
+    <MudItem xs="1" />
+    <MudItem xs="10">
+        <MudDataGrid Items="@GridData" T="GridItem"
+                     EditMode="DataGridEditMode.Cell" DragDropColumnReordering="true" ShowColumnOptions="true" ShowFilterIcons="true" ShowMenuIcon="true"
+                     Bordered="true"
+                     Dense="true"
+                     ReadOnly="false"
+        >
+            <Columns>
+                <PropertyColumn Property="arg => arg.string1"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.string2"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.string3"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.string4"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.string5"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.number1"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.number2"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.number3"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.number4"></PropertyColumn>
+                <PropertyColumn Property="arg => arg.number5"></PropertyColumn>
+            </Columns>
+        </MudDataGrid>
+    </MudItem>
+    <MudItem xs="1"></MudItem>
+</MudGrid>
+
+
+@code {
+    
+    public List<GridItem> GridData { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        GridData = new List<GridItem>
+        {
+            new GridItem{number1 = 1, string1 = "Some String 1"},
+            new GridItem{number1 = 2, string1 = "Some String 2"},
+            new GridItem{number1 = 3, string1 = "Some String 3"},
+            new GridItem{number1 = 4, string1 = "Some String 4"},
+            new GridItem{number1 = 5, string1 = "Some String 5"},
+        };
+    }
+
+}
