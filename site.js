@@ -13,3 +13,10 @@
     anchorElement.remove();
     URL.revokeObjectURL(url);
 }
+function CopyToClipBoard(text) {
+    navigator.clipboard.writeText(text).then(function () {
+        alert("Share Link copied to clipboard");
+    }).catch(function error (){
+        alert(error);
+    });
+}

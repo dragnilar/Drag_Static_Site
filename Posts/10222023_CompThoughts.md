@@ -2,6 +2,7 @@
 tags: blog, thoughts, components, blazor
 title: Thoughts On The Components Used For This Site
 published: 10/22/2023 17:24:00
+quicklink: ComponentsOnSiteThoughts
 ---
 # This Site Uses MudBlazor
 ### It Lives Up to Its Claim, BTW
