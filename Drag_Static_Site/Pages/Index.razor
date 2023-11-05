@@ -1,10 +1,11 @@
-﻿@page "/"
-@page "/blog"
+﻿@page "/{QuickLinkParam?}"
+@page "/blog/{QuickLinkParam?}"
 @using Drag_Static_Site.Models
 @using Drag_Static_Site.Services
 @inject HttpClient HttpClient
 @inject PostService PostService
-
+@inject NavigationManager NavManager
+@inject IJSRuntime JsRunTime
 @if (CurrentPost == null)
 {
     <MudSkeleton SkeletonType="SkeletonType.Circle" Width="75px" Height="75px" />
@@ -21,6 +22,9 @@ else
                 <MudText Typo="Typo.h3" Align="Align.Left">@CurrentPost.PostName</MudText>
                 <br/>
                 <MudText Typo="Typo.h5" Align="Align.Right">Published / Last Updated: @CurrentPost.PublishedDateTime</MudText>
+                <MudText Align="Align.Right">
+                    <MudLink Typo="Typo.h5" OnClick="CopyLinkToClipBoard_Click" >Share Link: @NavManager.Uri@CurrentPost.QuickLink</MudLink>
+                </MudText>
             </MudPaper>
             <br/>
             <MudMarkdown Value="@CurrentMarkDown"></MudMarkdown>
@@ -38,6 +42,8 @@ else
 
 @code
 {
+    [Parameter]
+    public string QuickLinkParam { get; set; }
     string CurrentMarkDown;
     int CurrentPostIndex;
     int LastPostIndex => PostService.LastPostIndex;
@@ -46,7 +52,14 @@ else
     protected override async Task OnInitializedAsync()
     {
         await PostService.InitializeAsync(HttpClient);
-        CurrentPost = PostService.Posts.First();
+        if (!string.IsNullOrWhiteSpace(QuickLinkParam))
+        {
+            CurrentPost = PostService.Posts.FirstOrDefault(x => x.QuickLink == QuickLinkParam);
+        }
+        if (CurrentPost == null)
+        {
+            CurrentPost = PostService.Posts.First();
+        }
         var markdown = await PostService.GetPostHtmlAsync(CurrentPost, HttpClient);
         CurrentMarkDown = markdown;
         CurrentPostIndex = 0;
@@ -85,5 +98,10 @@ else
             CurrentPostIndex = 0;
         }
 
+    }
+
+    private async Task CopyLinkToClipBoard_Click(MouseEventArgs arg)
+    {
+        await JsRunTime.InvokeVoidAsync("CopyToClipBoard", $"{@NavManager.Uri}{CurrentPost.QuickLink}");
     }
 }

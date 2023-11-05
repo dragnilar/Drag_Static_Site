@@ -8,5 +8,6 @@ namespace Drag_Static_Site.Models
         public DateTime PublishedDateTime { get; set; }
         public string   FileName          { get; set; }
         public string   Tags              { get; set; }
+        public string   QuickLink         { get; set; }
     }
 }

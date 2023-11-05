@@ -13,4 +13,6 @@ public class PostFrontMatter
     public DateTime PublishedDateTime { get; set; }
     [YamlMember(Alias = "fileName")]
     public string FileName { get; set; }
+    [YamlMember(Alias = "quicklink")]
+    public string QuickLink { get; set; }
 }

@@ -21,6 +21,12 @@
         <Folder Include="wwwroot\fonts\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="wwwroot\site.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
         <Exec Command="dotnet build $(ProjectDir)../PostMetaDataGenerator/PostMetaDataGenerator.csproj -o $(ProjectDir)/PreBuildUtils/&#xA;&#xA;dotnet $(ProjectDir)/PreBuildUtils/PostMetaDataGenerator.dll" />
     </Target>
