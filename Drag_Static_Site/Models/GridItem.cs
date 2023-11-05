@@ -2,24 +2,30 @@
 
 public class GridItem
 {
-    public int     number1 { get; set; }
-    public int     number2 { get; set; }
-    public int     number3 { get; set; }
-    public int     number4 { get; set; }
-    public int     number5 { get; set; }
-    public string  string1 { get; set; }
-    public string  string2 { get; set; }
-    public string  string3 { get; set; }
-    public string  string4 { get; set; }
-    public string  string5 { get; set; }
-    public decimal dec1    { get; set; }
-    public decimal dec2    { get; set; }
-    public decimal dec3    { get; set; }
-    public decimal dec4    { get; set; }
-    public decimal dec5    { get; set; }
-    public bool    bool1   { get; set; }
-    public bool    bool2   { get; set; }
-    public bool    bool3   { get; set; }
-    public bool    bool4   { get; set; }
-    public bool    bool5   { get; set; }
+    public string a { get; set; }
+    public string b { get; set; }
+    public string c { get; set; }
+    public string d { get; set; }
+    public string e { get; set; }
+    public string f { get; set; }
+    public string g { get; set; }
+    public string h { get; set; }
+    public string i { get; set; }
+    public string j { get; set; }
+    public string k { get; set; }
+    public string l { get; set; }
+    public string m { get; set; }
+    public string n { get; set; }
+    public string o { get; set; }
+    public string p { get; set; }
+    public string q { get; set; }
+    public string r { get; set; }
+    public string s { get; set; }
+    public string t { get; set; }
+    public string u { get; set; }
+    public string v { get; set; }
+    public string w { get; set; }
+    public string x { get; set; }
+    public string y { get; set; }
+    public string z { get; set; }
 }

@@ -1,49 +1,200 @@
 ﻿@page "/grid"
 @using Drag_Static_Site.Models
-<MudText Typo="Typo.h2">Look, A Data Grid!</MudText>
-<MudText Typo="Typo.h5">No .NET Site would be complete without a data grid...</MudText>
+@using System.Text.Json
+@using CsvHelper.Configuration
+@using System.Globalization
+@using System.Text
+@using CsvHelper
+@using Drag_Static_Site.Services
+@inject IJSRuntime JsRuntime;
+@inject TheGridPageService PageService;
 <br/>
+<MudDivider />
 <MudGrid>
-    <MudItem xs="1" />
+    <MudItem xs="1"/>
     <MudItem xs="10">
-        <MudDataGrid Items="@GridData" T="GridItem"
-                     EditMode="DataGridEditMode.Cell" DragDropColumnReordering="true" ShowColumnOptions="true" ShowFilterIcons="true" ShowMenuIcon="true"
-                     Bordered="true"
-                     Dense="true"
-                     ReadOnly="false"
-        >
-            <Columns>
-                <PropertyColumn Property="arg => arg.string1"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.string2"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.string3"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.string4"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.string5"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.number1"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.number2"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.number3"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.number4"></PropertyColumn>
-                <PropertyColumn Property="arg => arg.number5"></PropertyColumn>
-            </Columns>
-        </MudDataGrid>
+        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true">
+            <MudTabPanel Text="Grid Creator" Icon="@Icons.Material.Filled.Grid4x4">
+                <MudToolBar>
+                    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="AddRow">Add Item</MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="DeleteRow" Disabled="@CantDelete">Delete Item</MudIconButton>
+                </MudToolBar>
+                <MudDataGrid Items="@GridData.GridItems" T="GridItem"
+                             EditMode="DataGridEditMode.Cell" DragDropColumnReordering="true" ShowColumnOptions="true" ShowFilterIcons="true" ShowMenuIcon="true"
+                             Bordered="true"
+                             Dense="true"
+                             Hideable="true"
+                             ReadOnly="false"
+                             @ref="@Grid">
+                    <Columns>
+                        <PropertyColumn Property="x => x.a" Title="@GridData.Header.a"/>
+                        <PropertyColumn Property="x => x.b" Title="@GridData.Header.b"/>
+                        <PropertyColumn Property="x => x.c" Title="@GridData.Header.c"/>
+                        <PropertyColumn Property="x => x.d" Title="@GridData.Header.d"/>
+                        <PropertyColumn Property="x => x.e" Title="@GridData.Header.e"/>
+                        <PropertyColumn Property="x => x.f" Title="@GridData.Header.f"/>
+                        <PropertyColumn Property="x => x.g" Title="@GridData.Header.g" Hidden="true" />
+                        <PropertyColumn Property="x => x.h" Title="@GridData.Header.h" Hidden="true"/>
+                        <PropertyColumn Property="x => x.i" Title="@GridData.Header.i" Hidden="true"/>
+                        <PropertyColumn Property="x => x.j" Title="@GridData.Header.j" Hidden="true"/>
+                        <PropertyColumn Property="x => x.k" Title="@GridData.Header.k" Hidden="true"/>
+                        <PropertyColumn Property="x => x.l" Title="@GridData.Header.l" Hidden="true"/>
+                        <PropertyColumn Property="x => x.m" Title="@GridData.Header.m" Hidden="true"/>
+                        <PropertyColumn Property="x => x.n" Title="@GridData.Header.n" Hidden="true"/>
+                        <PropertyColumn Property="x => x.o" Title="@GridData.Header.o" Hidden="true"/>
+                        <PropertyColumn Property="x => x.p" Title="@GridData.Header.p" Hidden="true"/>
+                        <PropertyColumn Property="x => x.q" Title="@GridData.Header.q" Hidden="true"/>
+                        <PropertyColumn Property="x => x.r" Title="@GridData.Header.r" Hidden="true"/>
+                        <PropertyColumn Property="x => x.s" Title="@GridData.Header.s" Hidden="true"/>
+                        <PropertyColumn Property="x => x.t" Title="@GridData.Header.t" Hidden="true"/>
+                        <PropertyColumn Property="x => x.u" Title="@GridData.Header.u" Hidden="true"/>
+                        <PropertyColumn Property="x => x.v" Title="@GridData.Header.v" Hidden="true"/>
+                        <PropertyColumn Property="x => x.w" Title="@GridData.Header.w" Hidden="true"/>
+                        <PropertyColumn Property="x => x.x" Title="@GridData.Header.x" Hidden="true"/>
+                        <PropertyColumn Property="x => x.y" Title="@GridData.Header.y" Hidden="true"/>
+                        <PropertyColumn Property="x => x.z" Title="@GridData.Header.z" Hidden="true"/>
+                    </Columns>
+                </MudDataGrid>
+                <br />
+                <MudToolBar>
+                    <MudButton StartIcon="@Icons.Material.Filled.TextSnippet" OnClick="JsonExport">Export To JSON</MudButton>
+                    <MudButton OnClick="CsvExport" StartIcon="@Icons.Custom.FileFormats.FileExcel" >Export To CSV</MudButton>
+                </MudToolBar>
+            </MudTabPanel>
+            <MudTabPanel Text="Grid Settings" Icon="@Icons.Material.Outlined.Settings">
+                <MudGrid>
+                    <MudItem md="3">
+                        <MudTextField Label="Column a" @bind-Text="@GridData.Header.a" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column b" @bind-Text="@GridData.Header.b" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column c" @bind-Text="@GridData.Header.c" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column d" @bind-Text="@GridData.Header.d" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column e" @bind-Text="@GridData.Header.e" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column f" @bind-Text="@GridData.Header.f" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column g" @bind-Text="@GridData.Header.g" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column h" @bind-Text="@GridData.Header.h" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column i" @bind-Text="@GridData.Header.i" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column j" @bind-Text="@GridData.Header.j" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column k" @bind-Text="@GridData.Header.k" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column l" @bind-Text="@GridData.Header.l" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column m" @bind-Text="@GridData.Header.m" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column n" @bind-Text="@GridData.Header.n" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column o" @bind-Text="@GridData.Header.o" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column p" @bind-Text="@GridData.Header.p" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column q" @bind-Text="@GridData.Header.q" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column r" @bind-Text="@GridData.Header.r" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column s" @bind-Text="@GridData.Header.s" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column t" @bind-Text="@GridData.Header.t" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column u" @bind-Text="@GridData.Header.u" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column v" @bind-Text="@GridData.Header.v" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column w" @bind-Text="@GridData.Header.w" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column x" @bind-Text="@GridData.Header.x" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column y" @bind-Text="@GridData.Header.y" T="string" />
+                    </MudItem>
+                    <MudItem md="3">
+                        <MudTextField Label="Column z" @bind-Text="@GridData.Header.z" T="string" />
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+        </MudTabs>
     </MudItem>
     <MudItem xs="1"></MudItem>
 </MudGrid>
 
-
 @code {
-    
-    public List<GridItem> GridData { get; set; }
+
+    public MudDataGrid<GridItem> Grid { get; set; }
+    public GridData GridData { get; set; }
+    public bool CantDelete => !GridData.GridItems.Any();
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        GridData = new List<GridItem>
-        {
-            new GridItem{number1 = 1, string1 = "Some String 1"},
-            new GridItem{number1 = 2, string1 = "Some String 2"},
-            new GridItem{number1 = 3, string1 = "Some String 3"},
-            new GridItem{number1 = 4, string1 = "Some String 4"},
-            new GridItem{number1 = 5, string1 = "Some String 5"},
-        };
+        GridData = new GridData();
+        GridData.Header.a = "Id";
+        GridData.Header.b = "Name";
+        GridData.Header.c = "SomeText1";
+        GridData.Header.d = "SomeText2";
+        GridData.Header.e = "SomeText3";
+        GridData.Header.f = "SomeText4";
     }
+
+    protected void AddRow()
+    {
+        GridData.GridItems.Add(new GridItem());
+    }
+
+    protected void DeleteRow()
+    {
+        GridData.GridItems.Remove(GridData.GridItems.Last());
+    }
+
+    protected async Task JsonExport()
+    {
+        var jsonString = await PageService.GetJsonStringForGridData(GridData);
+        var memoryStream = await PageService.ConvertStringToMemoryStream(jsonString);
+        using (var streamRef = new DotNetStreamReference(memoryStream))
+        {
+            await JsRuntime.InvokeVoidAsync("BlazorDownloadFile", "Export.json", streamRef);
+        }
+    }
+    protected async Task CsvExport()
+    {
+        var stringBuffer = await PageService.GetCsvStringForGridData(GridData);
+        var memoryStream = await PageService.ConvertStringToMemoryStream(stringBuffer);
+        using (var streamRef = new DotNetStreamReference(memoryStream))
+        {
+            await JsRuntime.InvokeVoidAsync("BlazorDownloadFile", "Export.csv", streamRef);
+        }
+    }
+
+    
 
 }
