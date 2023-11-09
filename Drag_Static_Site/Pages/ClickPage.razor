@@ -1,26 +1,48 @@
 ﻿@page "/clickMe"
+@using Drag_Static_Site.Models
+@using Drag_Static_Site.Components
+@using Bogus
 <br/>
 <br/>
 <MudPaper>
     <MudGrid>
-        <MudItem md="5"></MudItem>
+        <MudItem md="4"></MudItem>
         <MudItem md="2">
-            <MudButton OnClick="@ClickMe_OnClick">Click Me</MudButton> 
+            <MudPaper Elevation="2">
+                <MudButton Class="ms-2" OnClick="@ClickMe_OnClick" Color="Color.Primary" EndIcon="@Icons.Material.Filled.AddTask" Size="Size.Large" >Click Me</MudButton> 
+            </MudPaper>
         </MudItem>
-        <MudItem md="5"></MudItem>
-        <MudItem md="5"></MudItem>
         <MudItem md="2">
-            <MudText Typo="Typo.h6" Color="Color.Success" Class="align-center" >@ClickMeString</MudText>
+            <MudPaper Elevation="2">
+                <MudButton Class="ms-2"  OnClick="@ClickMe_Times10" Disabled="@Processing10Clicks" EndIcon="@Icons.Material.Filled.Forward10" Color="Color.Success" Size="Size.Large">
+                    @if (Processing10Clicks)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                        <MudText Class="ms-2">Processing</MudText>
+                    }
+                    else
+                    {
+                        <MudText>Click Me For 10 Clicks</MudText>
+                    }
+                </MudButton>
+            </MudPaper>
         </MudItem>
+        <MudItem md="4"></MudItem>
+        <MudItem md="3"></MudItem>
+        <MudItem md="2">
+            <MudText Typo="Typo.h6" Color="Color.Success" Class="align-center" >Amount To Sell: @AmountToSell.ToString("C2")</MudText>
+        </MudItem>
+        <MudItem md="2">
+            <MudText Typo="Typo.h6" Color="Color.Success" Class="align-center" >Amount Sold: @AmountSold.ToString("C2")</MudText>
+        </MudItem>
+        
         <MudItem md="5"></MudItem>
     </MudGrid>
     <MudGrid>
         @{
-            for (int i = 0; i < TimesClicked; i++)
+            foreach (var clickItem in ClickItems)
             {
-                <MudItem md="2">
-                    <MudPaper Elevation="2"><MudButton OnClick="@ClickMe_Remove_Click" >Click Me To Remove Me</MudButton></MudPaper>
-                </MudItem>
+                <ClickItem @bind-Label="@clickItem.Label" @bind-Id="@clickItem.Id" @bind-Price="@clickItem.Price"  ClickMeButtonClicked="ClickMe_Remove_Click"   />
             }
         }
     </MudGrid>
@@ -29,19 +51,59 @@
 @code {
 
     public int TimesClicked { get; set; }
-
-    public string ClickMeString => TimesClicked <= 0 ? " " : $"You Clicked Me {TimesClicked} Times!";
+    private bool Processing10Clicks { get; set; } = false;
+    public List<ClickItem> ClickItems { get; set; } = new List<ClickItem>();
+    private Faker Bogus { get; set; } = new Faker();
+    public double AmountToSell { get; set; }
+    public double AmountSold { get; set; }
 
     private Task ClickMe_OnClick(MouseEventArgs arg)
     {
+        var price = Bogus.Random.Int(1, 9999);
+        var itemToAdd = new ClickItem
+        {
+            Id = TimesClicked + 1,
+            Label = Bogus.Commerce.ProductName(),
+        };
+        ClickItems.Add(itemToAdd);
+        itemToAdd.Price = price;
+        AmountToSell += price;
         TimesClicked++;
         return Task.CompletedTask;
     }
-
-    private Task ClickMe_Remove_Click(MouseEventArgs arg)
+    
+    private Task ClickMe_Times10(MouseEventArgs arg)
     {
+        for (int i = 0; i < 10; i++)
+        {
+            var price = Bogus.Random.Int(1, 9999);
+            var itemToAdd = new ClickItem
+            {
+                Id = TimesClicked + 1,
+                Label = Bogus.Commerce.ProductName(),
+            };
+            ClickItems.Add(itemToAdd);
+            itemToAdd.Price = price;
+            AmountToSell += price;
+            TimesClicked++;
+        }
+        return Task.CompletedTask;
+    }
+
+    private Task ClickMe_Remove_Click(int arg)
+    {
+        var itemToRemove = ClickItems.FirstOrDefault(x => x.Id == arg);
+        if (itemToRemove != null)
+        {
+            AmountToSell -= itemToRemove.Price;
+            AmountSold += itemToRemove.Price;
+            ClickItems.Remove(itemToRemove);
+        }
+        
         TimesClicked--;
         return Task.CompletedTask;
     }
+
+
 
 }

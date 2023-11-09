@@ -1,0 +1,70 @@
+﻿<MudItem md="2">
+    <MudPaper Elevation="2">
+        <MudButton OnClick="@ClickMe_Remove_Click" EndIcon="@Icons.Material.Filled.Sell">
+            <MudText Typo="Typo.h6">@Label</MudText>
+            <MudNumericField @bind-Value="@Price" Format="C2" ReadOnly="true" Variant="Variant.Outlined" Label="Price (Read Only)"></MudNumericField>
+        </MudButton>
+        <br/>
+    </MudPaper>
+</MudItem>
+
+@code {
+    private string _label;
+    private int _id;
+    private double _price;
+    [Parameter]
+    public string Label
+    {
+        get => _label;
+        set
+        {
+            if (_label != value)
+            {
+                _label = value;
+                LabelChanged.InvokeAsync(value);
+            }
+        }
+    }
+    [Parameter]
+    public int Id
+    {
+        get => _id;
+        set
+        {
+            if (_id != value)
+            {
+                _id = value;
+                IdChanged.InvokeAsync(value);
+            }
+        }
+    }
+    [Parameter]
+    public double Price 
+    { 
+        get => _price;
+        set
+        {
+            if (_price != value)
+            {
+                _price = value;
+                PriceChanged.InvokeAsync(value);    
+            }
+            
+        } 
+    }
+    [Parameter]
+    public EventCallback<string> LabelChanged { get; set; }
+    [Parameter]
+    public EventCallback<int> IdChanged { get; set; }
+    [Parameter]
+    public EventCallback<int> ClickMeButtonClicked { get; set; }
+    [Parameter]
+    public EventCallback<double> PriceChanged { get; set; }
+    
+    private Task ClickMe_Remove_Click(MouseEventArgs arg)
+    {
+        ClickMeButtonClicked.InvokeAsync(Id);
+        return Task.CompletedTask;
+    }
+
+}
