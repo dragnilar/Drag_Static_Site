@@ -1,0 +1,30 @@
+﻿@using Drag_Static_Site.Models
+<h3>Combat</h3>
+
+@code {
+    
+    public CombatPlayer Player { get; set; }
+    public CombatMonster Monster { get; set; }
+
+    protected override async  Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        Player = new CombatPlayer
+        {
+            Attack = 50,
+            Defense = 100,
+            Hp = 2500,
+            Name = "You"
+        };
+
+        Monster = new CombatMonster
+        {
+            MonsterAttack = 25,
+            MonsterDefense = 50,
+            MonsterHp = 200,
+            MonsterName = "Goblin"
+        };
+    }
+
+}
